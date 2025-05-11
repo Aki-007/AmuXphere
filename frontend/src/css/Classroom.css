@@ -1,0 +1,10 @@
+.canvas,
+#canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
+#mute_unmute {
+  position: absolute;
+  z-index: 10;
+}

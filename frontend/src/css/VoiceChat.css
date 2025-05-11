@@ -1,0 +1,270 @@
+.voice-chat-container {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  color: white;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+  max-width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.voice-chat-container.collapsed {
+  min-width: 150px;
+}
+
+.voice-chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.voice-chat-toggle {
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.voice-chat-header:hover .voice-chat-toggle {
+  opacity: 1;
+}
+
+.voice-chat-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  gap: 10px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.voice-chat-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.voice-chat-button.muted {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.voice-chat-button.unmuted {
+  background-color: #4caf50;
+  color: white;
+}
+
+.voice-chat-button.test-button {
+  background-color: #2196f3;
+  color: white;
+}
+
+.voice-chat-button.logs-button {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.voice-chat-button.volume-button {
+  background-color: #ff9800;
+  color: white;
+}
+
+.voice-chat-button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.voice-chat-button:active {
+  transform: scale(0.95);
+}
+
+.voice-chat-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.audio-level-indicator {
+  width: 50px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  margin-left: 8px;
+  overflow: hidden;
+}
+
+.audio-level-bar {
+  height: 100%;
+  background-color: #4caf50;
+  border-radius: 3px;
+  transition: width 0.1s ease;
+}
+
+.volume-slider-container {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-90deg);
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 101;
+  width: 100px;
+}
+
+.volume-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  border-radius: 2px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ff9800;
+  cursor: pointer;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ff9800;
+  cursor: pointer;
+  border: none;
+}
+
+.voice-status {
+  font-size: 14px;
+}
+
+.voice-chat-error {
+  color: #ff4d4d;
+  font-size: 12px;
+  padding: 0 15px 10px;
+}
+
+.voice-chat-users {
+  padding: 0 15px 10px;
+}
+
+.voice-chat-users-title {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.voice-chat-users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.voice-chat-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  padding: 5px 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.voice-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.voice-indicator.speaking {
+  background-color: #4caf50;
+  animation: pulse 1.5s infinite;
+}
+
+.voice-indicator.muted {
+  background-color: #ff4d4d;
+}
+
+.voice-chat-logs {
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  padding: 8px;
+  margin: 0 15px 10px;
+}
+
+.voice-chat-logs-title {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.voice-chat-logs-content {
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.log-entry {
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.log-time {
+  color: #aaa;
+  margin-right: 5px;
+}
+
+.log-info {
+  color: #8bc34a;
+}
+
+.log-error {
+  color: #ff5252;
+}
+
+.log-warning {
+  color: #ffc107;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

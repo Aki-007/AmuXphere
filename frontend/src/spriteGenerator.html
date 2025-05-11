@@ -1,0 +1,77 @@
+<!-- spriteGenerator.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sprite Generator</title>
+  <!-- Include Three.js and GLTFLoader -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; }
+  </style>
+</head>
+<body>
+<canvas id="threeCanvas"></canvas>
+<script>
+  let scene, camera, renderer, model;
+  const canvas = document.getElementById('threeCanvas');
+
+  function init() {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, preserveDrawingBuffer: true });
+    renderer.setSize(1080, 1080, false);
+    renderer.setClearColor(0xffffff, 1);
+    renderer.setPixelRatio(window.devicePixelRatio * 2); // Increase rendering quality
+
+
+    scene = new THREE.Scene();
+
+    // Basic lighting setup
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    ambientLight.intensity = 1.5;
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(10, 10, 10);
+    directionalLight.intensity = 2;
+    scene.add(directionalLight);
+
+    // Initialize camera; its position will be updated by Puppeteer
+    camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+    camera.position.set(0, 1.5, 5);
+    camera.lookAt(new THREE.Vector3(0, 1.5, 0));
+
+    // Parse avatar URL from query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const avatarUrl = urlParams.get('avatarUrl');
+
+    // Load the avatar model using GLTFLoader
+    const loader = new THREE.GLTFLoader();
+    loader.load(avatarUrl, function(gltf) {
+      model = gltf.scene;
+      model.scale.set(1.5, 1.5, 1.5);
+
+      scene.add(model);
+      animate();
+    }, undefined, function(error) {
+      console.error('Error loading avatar:', error);
+    });
+  }
+
+  // Simple animation loop for continuous rendering
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+
+  // Global function to update the camera settings from Puppeteer
+  window.updateCamera = function(settings) {
+    camera.position.set(settings.position.x, settings.position.y, settings.position.z);
+    camera.lookAt(new THREE.Vector3(settings.lookAt.x, settings.lookAt.y, settings.lookAt.z));
+    // Render immediately after updating camera
+    renderer.render(scene, camera);
+  }
+
+  init();
+</script>
+</body>
+</html>
