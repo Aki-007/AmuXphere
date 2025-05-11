@@ -1,0 +1,56 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# dotenv environment variables
+.env
+.env.*  # ignores .env.development, .env.production, etc.
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Coverage and test results
+coverage/
+*.lcov
+
+# Compiled output (if using TypeScript or Babel)
+dist/
+build/
+
+# Temporary files
+tmp/
+temp/
+
+# Debug files
+.vscode/
+.idea/
+
+# Operating system files
+*.swp
+*.swo
+
+# Docker artifacts
+*.container
+*.image
+
+# Optional: ignore database files (e.g., if using SQLite locally)
+*.sqlite
+*.db
+*.sqlite3
+
+# Optional: ignore local development files
+*.local
