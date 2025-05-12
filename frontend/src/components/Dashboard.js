@@ -154,7 +154,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <h1 className="logo">AmuSphere</h1>
+        <h1 className="logo">AmuXphere</h1>
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <ProfileDropdown user={user} onLogout={handleLogout} />
         </div>
