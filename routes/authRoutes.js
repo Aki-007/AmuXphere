@@ -24,10 +24,10 @@ router.post("/register", async (req, res) => {
 
   try {
     // Check if email already exists in the users table
-    const emailCheckQuery = `SELECT id FROM users WHERE email = $1`
-    const emailCheckResult = await db.query(emailCheckQuery, [email])
+    //const emailCheckQuery = `SELECT id FROM users WHERE email = $1`
+    const emailCheckResult = await db`SELECT id FROM users WHERE email = ${email}`
 
-    if (emailCheckResult.rows.length > 0) {
+    if (emailCheckResult.length > 0) {
       return res.status(400).json({ error: "Email is already registered" })
     }
 
@@ -35,18 +35,18 @@ router.post("/register", async (req, res) => {
 
     // Insert into users table
     const userQuery = `INSERT INTO users (name, email) VALUES ($1, $2) RETURNING id`
-    const userResult = await db.query(userQuery, [name, email])
+    const userResult = await db`INSERT INTO users (name, email) VALUES (${name}, ${email}) RETURNING id`
 
-    const userId = userResult.rows[0].id
+    const userId = userResult[0].id
 
     // Insert into local_auth table
     const localAuthQuery = `INSERT INTO local_auth (user_id, password) VALUES ($1, $2)`
-    await db.query(localAuthQuery, [userId, hashedPassword])
+    await db`INSERT INTO local_auth (user_id, password) VALUES (${userId}, ${hashedPassword})`
 
     const fetchQuery = `SELECT * FROM users WHERE id = $1`
-    const fetchResult = await db.query(fetchQuery, [userId])
+    const fetchResult = await db`SELECT * FROM users WHERE id = ${userId}`
 
-    const user = fetchResult.rows[0]
+    const user = fetchResult[0]
 
     req.logIn(user, (err) => {
       if (err) {

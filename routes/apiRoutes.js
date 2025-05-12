@@ -13,14 +13,14 @@ router.get("/user", async (req, res) => {
 
     // Fetch user details
     const userQuery = `SELECT * FROM users WHERE id = $1`
-    const userResult = await db.query(userQuery, [userId])
-    const user = userResult.rows[0]
+    const userResult = await db`SELECT * FROM users WHERE id = ${userId}`
+    const user = userResult[0]
 
     // Check login method
     const localQuery = `SELECT * FROM local_auth WHERE user_id = $1`
-    const localResult = await db.query(localQuery, [userId])
+    const localResult = await db`SELECT * FROM local_auth WHERE user_id = ${userId}`
 
-    const loginMethod = localResult.rows.length > 0 ? "local" : "google"
+    const loginMethod = localResult.length > 0 ? "local" : "google"
 
     res.json({ user, loginMethod })
   } catch (err) {
@@ -56,9 +56,13 @@ router.post("/profile-setup", isAuthenticated, async (req, res) => {
       SET role = $1, avatar_url = $2
       WHERE id = $3 RETURNING *;
     `
-    const result = await db.query(query, [role, avatarUrl, userId])
+    const result = await db`
+      UPDATE users
+      SET role = ${role}, avatar_url = ${avatarUrl}
+      WHERE id = ${userId} RETURNING *
+    `
 
-    if (result.rows.length > 0) {
+    if (result.length > 0) {
       // Send the response immediately
       res.status(200).json({ message: "Profile updated successfully." })
     } else {

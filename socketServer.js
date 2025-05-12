@@ -66,8 +66,7 @@ const setupWebSocket = (server) => {
             io.to(room_id).emit("teacher_left")
 
             // Clean up DB session participants
-            await db.query("DELETE FROM session_participants WHERE room_id = $1", [room_id])
-
+            await db`DELETE FROM session_participants WHERE room_id = ${room_id}`
             // Also clean up in-memory
             setTimeout(
               () => {
@@ -103,7 +102,7 @@ const setupWebSocket = (server) => {
           io.to(room_id).emit("teacher_left")
 
           // Clean up DB session participants
-          await db.query("DELETE FROM session_participants WHERE room_id = $1", [room_id])
+          await db`DELETE FROM session_participants WHERE room_id = ${room_id}`
         } catch (err) {
           console.error("Error removing session participants:", err)
         }
